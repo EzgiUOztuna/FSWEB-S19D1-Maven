@@ -17,12 +17,14 @@ public class Vegetable {
 
     @Column(name = "name")
     private String name;
+
     @Column(name = "price")
     private Double price;
-    @Column(name = "is_grownontree")
-    private Boolean isGrownOnTree;
 
-    public void setGrownOnTree(Boolean isGrownOnTree)
+    @Column(name = "is_grown_on_tree")
+    private boolean isGrownOnTree;
+
+    public void setGrownOnTree(boolean isGrownOnTree)
     {
         this.isGrownOnTree = isGrownOnTree;
     }

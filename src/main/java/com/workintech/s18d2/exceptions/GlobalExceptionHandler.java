@@ -6,24 +6,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.LocalDateTime;
+
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(PlantException.class)
-    public ResponseEntity<PlantErrorResponse> handleException(PlantException plantException)
-    {
-        PlantErrorResponse errorResponse = new PlantErrorResponse(plantException.getHttpStatus().value(),
-                plantException.getMessage(), System.currentTimeMillis());
-        log.error("Error occured",errorResponse);
-        return new ResponseEntity<PlantErrorResponse>(errorResponse, plantException.getHttpStatus());
+    public ResponseEntity<PlantErrorResponse> handleException(PlantException exception){
+
+        log.error("PlantException occured",exception);
+
+        PlantErrorResponse errorResponse = new PlantErrorResponse(exception.getHttpStatus().value(),
+                exception.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(errorResponse, exception.getHttpStatus());
     }
 
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<PlantErrorResponse> handleException(Exception exception)
-    {
-        PlantErrorResponse errorResponse = new PlantErrorResponse(HttpStatus.BAD_REQUEST.value(),
-                exception.getMessage(), System.currentTimeMillis());
-        return new ResponseEntity<PlantErrorResponse>(errorResponse,HttpStatus.BAD_REQUEST);
+    public ResponseEntity<PlantErrorResponse> handleException(Exception exception){
+
+        log.error("PlantException occured",exception);
+
+        PlantErrorResponse errorResponse = new PlantErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                exception.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -1,14 +1,5 @@
 package com.workintech.s18d2.exceptions;
+import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-public class PlantErrorResponse {
-    private int status;
-    private String message;
-    private long timestamp;
+public record PlantErrorResponse(Integer status, String message, LocalDateTime localDateTime) {
 }

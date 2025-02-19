@@ -1,4 +1,6 @@
 package com.workintech.s18d2.dto;
 
-public record FruitResponseRecord(String name, Double price) {
+import com.workintech.s18d2.entity.Fruit;
+
+public record FruitResponseRecord(String message, Fruit fruit) {
 }

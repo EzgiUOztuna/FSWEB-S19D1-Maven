@@ -1,11 +1,12 @@
 package com.workintech.s18d2.exceptions;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
+@Getter
+@Setter
 public class PlantException extends RuntimeException{
     private HttpStatus httpStatus;
 

@@ -17,8 +17,11 @@ public class Fruit {
 
     @Column(name = "name")
     private String name;
+
     @Column(name = "price")
     private Double price;
+
+    @Column(name = "fruit_type")
     @Enumerated(EnumType.STRING)
     private FruitType fruitType;
 }

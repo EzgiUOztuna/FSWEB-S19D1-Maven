@@ -17,11 +17,13 @@ public class FruitServiceImpl implements FruitService{
     private FruitRepository fruitRepository;
 
     @Autowired
-    public FruitServiceImpl(FruitRepository fruitRepository)
-    {
+    public FruitServiceImpl(FruitRepository fruitRepository){
         this.fruitRepository = fruitRepository;
     }
 
+    public List<Fruit> getByPriceAsc(){
+        return fruitRepository.getByPriceAsc();
+    }
 
     @Override
     public List<Fruit> getByPriceDesc() {
@@ -29,43 +31,33 @@ public class FruitServiceImpl implements FruitService{
     }
 
     @Override
-    public List<Fruit> searchByName(String name) {
-        return fruitRepository.searchByName(name);
-    }
-
-    public List<Fruit> getByPriceAsc()
-    {
-        return fruitRepository.getByPriceAsc();
-    }
-
-    @Override
     public Fruit getById(Long id) {
-        PlantValidation.isValidId(id);
-        Optional<Fruit> fruitOptional = fruitRepository.findById(id);
-        if(fruitOptional.isPresent())
-        {
-            return fruitOptional.get();
-        }
-        throw new PlantException("This id is not exist", HttpStatus.BAD_REQUEST);
+        return fruitRepository.findById(id).orElseThrow(() -> new PlantException("plant with given id is not exist: "+id, HttpStatus.NOT_FOUND));
     }
 
     @Override
     public Fruit save(Fruit fruit) {
-        PlantValidation.dataControlFruit(fruit);
         return fruitRepository.save(fruit);
     }
 
     @Override
-    public List<Fruit> getAllFruitsByName(String name) {
-        return fruitRepository.getAllFruitsByName(name);
-    }
-
-    @Override
     public Fruit delete(Long id) {
-        PlantValidation.isValidId(id);
         Fruit fruit = getById(id);
-        PlantValidation.dataControlFruit(fruit);
         fruitRepository.delete(fruit);
         return fruit;
     }
+
+    @Override
+    public List<Fruit> searchByName(String name) {
+        return fruitRepository.searchByName(name);
+    }
+
+    /*
+    @Override
+    public List<Fruit> getAllFruitsByName(String name) {
+        return fruitRepository.getAllFruitsByName(name);
+    }
+    */
+
+
 }
